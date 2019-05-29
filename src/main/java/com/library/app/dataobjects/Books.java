@@ -17,7 +17,7 @@ public class Books{
 	private String book_name;
 	private String author;
 	private String ISBN;
-	private Date publish_year;
+	private String publish_year;
 	private Character status;
 	
 	
@@ -65,12 +65,14 @@ public class Books{
 		this.status = status;
 	}
 
-	public Date getPublish_year() {
+	public String getPublish_year() {
 		return publish_year;
 	}
 
-	public void setPublish_year(Date publish_year) {
+	public void setPublish_year(String publish_year) {
 		this.publish_year = publish_year;
 	}
+
+	
 	
 	}

@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+
 import com.library.app.dataobjects.Books;
 import com.library.app.exception.ResourceConflictException;
 import com.library.app.repository.BookRepository;
@@ -36,6 +38,12 @@ public class BookController {
 		return new ResponseEntity<List<Books>>(books, HttpStatus.OK);
 	}
 	
+	@GetMapping(path = "books/{bookId}")
+	public ResponseEntity<Books> bookById(@PathVariable("bookId") String bookId) {
+		Books bookById = this.bookRepository.findOne(Long.parseLong(bookId));
+		return new ResponseEntity<Books>(bookById, HttpStatus.OK);
+	}
+	
 	
 	@PostMapping("/addbook")
 	public ResponseEntity<Books> addBook(@RequestBody Books books) throws IOException {
@@ -50,10 +58,6 @@ public class BookController {
 	@PutMapping("/updateBook")
 	public ResponseEntity<Books> updateBook(@RequestBody Books books) throws IOException {
 		logger.info("updatebook() ..... Start");
-		Books existingbook = this.bookRepository.findById(books.getId());
-		if(existingbook!=null && existingbook.getId()!=books.getId()) {
-			throw new ResourceConflictException("Book with same email already exist");
-		}
 		Books savedBook = this.bookRepository.save(books);
 		logger.info("updateBook() ..... End");
 		return new ResponseEntity<Books>(savedBook, HttpStatus.OK);
